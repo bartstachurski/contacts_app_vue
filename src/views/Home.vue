@@ -73,7 +73,7 @@ export default {
         this.currentContact = contact;
       }
     },
-    createContact: function() {
+    createContact: function(callback) {
       var params = {
         first_name: this.newContactFirstName,
         last_name: this.newContactLastName,
@@ -82,9 +82,15 @@ export default {
         phone_number: this.newContactPhone,
         bio: this.newContactBio
       };
-      axios.post('/api/contacts', params).then(response => {
-        this.contacts.push(response.data);
-      });
+      try {
+        axios.post('/api/contacts', params).then(response => {
+          this.contacts.push(response.data);
+        });
+      } catch (exception) {
+        console.log("there is an error in the create contact!");
+      }
+      callback();
+      return;
     },
     deleteContact: function(contact) {
       console.log("deleteContact function says bye bitch!");
