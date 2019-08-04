@@ -97,14 +97,15 @@ export default {
     updateContact: function(contact) {
       console.log("what's Gucci fromt the updateContact function!");
       console.log(contact);
-      var params = {
-        first_name: contact.first_name,
-        middle_name: contact.middle_name,
-        last_name: contact.last_name,
-        email: contact.email,
-        phone_number: contact.phone_number,
-        bio: contact.bio,
-      };
+      axios.patch('/api/contacts/' + contact.id, contact).then(response => {
+        console.log(response.data);
+        contact.first_name = response.data.first_name;
+        contact.middle_name = response.data.middle_name;
+        contact.last_name = response.data.last_name;
+        contact.email = response.data.email;
+        contact.phone_number = response.data.phone_number;
+        contact.bio = response.data.bio;
+      });
     }
   }
 };
